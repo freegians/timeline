@@ -25,6 +25,10 @@ public class MainController {
 		return "index";
 	}
 
+	@RequestMapping("/login")
+	public String login(Model model) {
+		return "login";
+	}
 
 
 //	@RequestMapping(value = "/main", method = RequestMethod.GET)

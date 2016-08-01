@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+    <style>
+        #login-form {
+            margin: 200px auto;
+            width: 300px;
+        }
+        .login-form-input > * {
+            display: inline-block;
+        }
+        .login-form-input > label {
+            width: 80px;
+        }
+    </style>
+</head>
+
+<body onload='document.f.username.focus();'>
+<div id="login-form">
+    <h3>Login with UserName and Password</h3>
+    <form name='f' action='/login' method='POST'>
+        <div class="login-form-input">
+            <label>UserName</label>
+            <div>
+                <input type="text" name="username" placeholder="UserName" />
+            </div>
+        </div>
+        <div class="login-form-input">
+            <label>Password</label>
+            <div>
+                <input type="password" name="password" placeholder="Password" />
+            </div>
+        </div>
+        <div class="login-form-input">
+            <div>
+                <button type="submit">Sign in</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+</body>
+</html>

@@ -1,14 +1,18 @@
 package com.freegians.timeline.controller.api;
 
 import com.freegians.timeline.controller.BaseController;
+import com.freegians.timeline.model.Users;
 import com.freegians.timeline.service.UsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * Created by freegians on 2016. 8. 1..
@@ -27,7 +31,7 @@ public class RestApiController extends BaseController{
      * 유저 전체 카운트
      * @return
      */
-    @RequestMapping(value = "/getCountOfUsers", method = RequestMethod.GET)
+    @RequestMapping(value = "/countOfUsers", method = RequestMethod.GET)
     @ResponseBody
     public Object getCountOfUsers() {
         try{
@@ -36,4 +40,17 @@ public class RestApiController extends BaseController{
             return createFailureResponse("Failed to get count all of users.", e);
         }
     }
+
+    @RequestMapping(value = "/user/{userName}", method = RequestMethod.PUT)
+    @ResponseBody
+    public Object putUser(
+            @PathVariable("userName") String userName
+    ) {
+        try {
+            return createSuccessResponse(usersService.createUser(userName, "USER"));
+        } catch (Exception e) {
+            return createFailureResponse("Fail to create user", e);
+        }
+    }
+
 }

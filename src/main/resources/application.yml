@@ -1,5 +1,3 @@
-debug: true
-
 server:
   context-path: /
   port: 8080
@@ -23,7 +21,7 @@ spring:
     password: timeline
   thymeleaf:
     cache: false
-    check-template-location: false
+#    check-template-location: false
 
 
 
@@ -32,3 +30,14 @@ spring:
 #spring.thymeleaf.enabled: true
 #spring.thymeleaf.mode: LEGACYHTML5
 #spring.thymeleaf.mode: jsp
+
+
+
+security:
+#  basic:
+#    enabled: true
+#  user:
+#    name: user
+#    password: user
+#    role: ADMIN
+  enable-csrf: false

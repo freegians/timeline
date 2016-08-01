@@ -1,5 +1,7 @@
 package com.freegians.timeline.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,8 +18,9 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "USER_ID")
     private long userId;
-    @Column(name = "NAME")
-    private String name;
+    @Column(name = "USER_NAME")
+    private String userName;
+    @JsonIgnore
     @Column(name = "PASSWORD")
     private String password;
     @Temporal(TemporalType.TIMESTAMP)
