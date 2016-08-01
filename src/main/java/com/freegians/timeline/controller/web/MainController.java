@@ -1,5 +1,6 @@
 package com.freegians.timeline.controller.web;
 
+import com.freegians.timeline.service.UsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +20,23 @@ import java.util.Map;
 public class MainController {
 	private static final Logger LOG = LoggerFactory.getLogger(MainController.class);
 
+	@Autowired
+	UsersService usersService;
 
 	@RequestMapping("/")
-	public String hello(Model model) {
-		return "index";
+	public ModelAndView hello() {
+		ModelAndView mav = new ModelAndView();
+		if(usersService.getCurrentUser() != null) {
+			mav.addObject("userId", usersService.getCurrentUser().getUserId());
+			mav.addObject("userName", usersService.getCurrentUser().getUsername());
+			mav.addObject("role", usersService.getCurrentUser().getAuthorities());
+		}
+		mav.setViewName("index");
+		return mav;
 	}
 
 	@RequestMapping("/login")
-	public String login(Model model) {
+	public String login() {
 		return "login";
 	}
 

@@ -2,6 +2,7 @@ package com.freegians.timeline.service;
 
 import com.freegians.timeline.model.UserRole;
 import com.freegians.timeline.model.Users;
+import com.freegians.timeline.security.CurrentUser;
 
 import java.util.Map;
 
@@ -16,4 +17,6 @@ public interface UsersService {
     Users createUser(String userName);
 
     UserRole createUserRole(long userId, String roleName);
+
+    CurrentUser getCurrentUser();
 }

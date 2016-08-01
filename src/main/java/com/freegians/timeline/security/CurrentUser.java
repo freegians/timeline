@@ -1,5 +1,6 @@
 package com.freegians.timeline.security;
 
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.SpringSecurityCoreVersion;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +12,7 @@ import java.util.*;
 /**
  * Created by freegians on 2016. 8. 1..
  */
+@Data
 public class CurrentUser implements UserDetails {
 
     private static final long serialVersionUID = -4086869747130410600L;
@@ -52,7 +54,7 @@ public class CurrentUser implements UserDetails {
     @Override
     public String getUsername() {
         // TODO Auto-generated method stub
-        return getUsername();
+        return userName;
     }
 
     @Override
