@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * Created by freegians on 2016. 8. 1..
  */
 @Controller
-@RequestMapping("/api")
-public class RestApiController extends BaseController{
+@RequestMapping("/api/user")
+public class UserApiController extends BaseController{
 
-    protected static final Logger LOG = LoggerFactory.getLogger(RestApiController.class);
+    protected static final Logger LOG = LoggerFactory.getLogger(UserApiController.class);
 
 
     @Autowired
@@ -38,7 +38,13 @@ public class RestApiController extends BaseController{
         }
     }
 
-    @RequestMapping(value = "/user/{userName}", method = RequestMethod.PUT)
+
+    /**
+     * 유저 생성
+     * @param userName
+     * @return
+     */
+    @RequestMapping(value = "/{userName}", method = RequestMethod.PUT)
     @ResponseBody
     public Object putUser(
             @PathVariable("userName") String userName
@@ -49,5 +55,8 @@ public class RestApiController extends BaseController{
             return createFailureResponse("Fail to create user", e);
         }
     }
+
+
+
 
 }

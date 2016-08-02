@@ -2,8 +2,8 @@ package com.freegians.timeline.security;
 
 import com.freegians.timeline.domain.UserRole;
 import com.freegians.timeline.domain.Users;
-import com.freegians.timeline.repository.IUserRoleRepository;
-import com.freegians.timeline.repository.IUsersRepository;
+import com.freegians.timeline.repository.UserRoleRepository;
+import com.freegians.timeline.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,10 +25,10 @@ import java.util.Set;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private IUsersRepository usersRepository;
+    private UsersRepository usersRepository;
 
     @Autowired
-    private IUserRoleRepository userRoleRepository;
+    private UserRoleRepository userRoleRepository;
 
     @Transactional(readOnly=true)
     @Override
