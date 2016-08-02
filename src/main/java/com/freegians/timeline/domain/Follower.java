@@ -1,0 +1,25 @@
+package com.freegians.timeline.domain;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+
+import javax.persistence.*;
+import java.util.Date;
+
+/**
+ * Created by freegians on 2016. 8. 1..
+ */
+
+@Entity (name = "follower")
+@Data
+public class Follower {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID")
+    private long id;
+    @Column(name = "USER_ID")
+    private long userId;
+    @Column(name = "FOLLOWER_ID")
+    private long followerId;
+
+}
