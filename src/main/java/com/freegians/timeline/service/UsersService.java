@@ -1,7 +1,7 @@
 package com.freegians.timeline.service;
 
-import com.freegians.timeline.model.UserRole;
-import com.freegians.timeline.model.Users;
+import com.freegians.timeline.domain.UserRole;
+import com.freegians.timeline.domain.Users;
 import com.freegians.timeline.security.CurrentUser;
 
 import java.util.Map;

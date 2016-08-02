@@ -1,4 +1,4 @@
-package com.freegians.timeline.model;
+package com.freegians.timeline.domain;
 
 import lombok.Data;
 

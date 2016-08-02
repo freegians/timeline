@@ -1,7 +1,7 @@
 package com.freegians.timeline.service;
 
-import com.freegians.timeline.model.UserRole;
-import com.freegians.timeline.model.Users;
+import com.freegians.timeline.domain.UserRole;
+import com.freegians.timeline.domain.Users;
 import com.freegians.timeline.repository.IUserRoleRepository;
 import com.freegians.timeline.repository.IUsersRepository;
 import com.freegians.timeline.security.CurrentUser;
@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

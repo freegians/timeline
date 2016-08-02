@@ -1,7 +1,6 @@
 package com.freegians.timeline.repository;
 
-import com.freegians.timeline.model.UserRole;
-import com.freegians.timeline.model.Users;
+import com.freegians.timeline.domain.UserRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

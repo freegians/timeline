@@ -1,7 +1,7 @@
 package com.freegians.timeline.security;
 
-import com.freegians.timeline.model.UserRole;
-import com.freegians.timeline.model.Users;
+import com.freegians.timeline.domain.UserRole;
+import com.freegians.timeline.domain.Users;
 import com.freegians.timeline.repository.IUserRoleRepository;
 import com.freegians.timeline.repository.IUsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;

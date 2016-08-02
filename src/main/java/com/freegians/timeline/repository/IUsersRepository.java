@@ -1,6 +1,6 @@
 package com.freegians.timeline.repository;
 
-import com.freegians.timeline.model.Users;
+import com.freegians.timeline.domain.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
