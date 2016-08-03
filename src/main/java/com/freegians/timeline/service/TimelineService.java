@@ -15,7 +15,11 @@ public interface TimelineService {
 
     List<Timeline> getTimelineAll();
 
+    List<Timeline> getTimelineAllByOriginal();
+
     List<Timeline> getTimelineAll(long start, int range);
+
+    List<Timeline> getTimelineAllByOriginal(long start, int range);
 
     List<Timeline> getTimeline(long userId);
 

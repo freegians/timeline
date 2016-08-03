@@ -18,5 +18,7 @@ public interface UsersService {
 
     UserRole createUserRole(long userId, String roleName);
 
+    Users getUser(String userName);
+
     CurrentUser getCurrentUser();
 }

@@ -1,5 +1,6 @@
 package com.freegians.timeline;
 
+import com.freegians.timeline.util.PostingMainThread;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -11,6 +12,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.Filter;
 import java.nio.charset.Charset;
 
@@ -42,4 +44,11 @@ public class TimelineApplication {
 		characterEncodingFilter.setForceEncoding(true);
 		return characterEncodingFilter;
 	}
+
+//	@PostConstruct
+	public void postConstruct() {
+			Thread t = new Thread(new PostingMainThread(1000, 2));
+			t.start();
+	}
+
 }

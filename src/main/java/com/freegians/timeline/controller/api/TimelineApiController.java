@@ -55,7 +55,7 @@ public class TimelineApiController extends BaseController{
                 if(userId > 0) {
                     return createSuccessResponse(timelineService.getTimeline(userId));
                 } else {
-                    return createSuccessResponse(timelineService.getTimelineAll());
+                    return createSuccessResponse(timelineService.getTimelineAllByOriginal());
                 }
             } else {
                 Map<String, Object> result = new HashMap<String, Object>();
@@ -67,7 +67,7 @@ public class TimelineApiController extends BaseController{
                 if(userId > 0) {
                     result.put("timeline", timelineService.getTimeline(userId, start, range));
                 } else {
-                    result.put("timeline", timelineService.getTimelineAll(start, range));
+                    result.put("timeline", timelineService.getTimelineAllByOriginal(start, range));
                 }
 
                 return createSuccessResponse(result);

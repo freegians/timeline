@@ -1,5 +1,6 @@
 package com.freegians.timeline.controller.web;
 
+import com.freegians.timeline.domain.Users;
 import com.freegians.timeline.service.UsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,17 +26,26 @@ public class MainController {
 	UsersService usersService;
 
 
-	/**
-	 * 인덱스 페이지
-	 * @return
-     */
-	@RequestMapping("/")
-	public ModelAndView hello() {
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public ModelAndView index(
+	) {
 		ModelAndView mav = new ModelAndView();
-		if(usersService.getCurrentUser() != null) {
-			mav.addObject("userId", usersService.getCurrentUser().getUserId());
-			mav.addObject("userName", usersService.getCurrentUser().getUsername());
-			mav.addObject("role", usersService.getCurrentUser().getAuthorities());
+	if(usersService.getCurrentUser() != null) {
+		return (ModelAndView)new ModelAndView("redirect:/" + usersService.getCurrentUser().getUsername() );
+	}
+		mav.setViewName("index");
+		return mav;
+	}
+
+	@RequestMapping(value = "/{userName}", method = RequestMethod.GET)
+	public ModelAndView user(
+			@PathVariable("userName") String userName
+	) {
+		ModelAndView mav = new ModelAndView();
+		if(userName != null) {
+			Users user = usersService.getUser(userName);
+			mav.addObject("userId", user.getUserId());
+			mav.addObject("userName", user.getUserName());
 		}
 		mav.setViewName("index");
 		return mav;
@@ -44,16 +55,5 @@ public class MainController {
 	public String login() {
 		return "login";
 	}
-
-
-//	@RequestMapping(value = "/main", method = RequestMethod.GET)
-//	public ModelAndView getWorkbenchView(
-//			@RequestParam(value = "wb", required=false) String wb
-//			) {
-//		ModelAndView mav = new ModelAndView();
-//
-//		mav.setViewName("web/main");
-//		return mav;
-//	}
 
 }

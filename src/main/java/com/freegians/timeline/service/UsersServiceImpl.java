@@ -70,6 +70,11 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
+    public Users getUser(String userName) {
+        return usersRepository.findByUserName(userName);
+    }
+
+    @Override
     public CurrentUser getCurrentUser() {
 
         try {

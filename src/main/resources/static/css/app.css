@@ -2,9 +2,15 @@ html {
     height: 100%;
 }
 
-body { margin: 0; padding: 0 }
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #E9EBEE;
+}
 
 header {
+    margin: 0 auto;
+    width: 1024px;
     height: 30px;
     color: #fff;
     background-color: #000;
@@ -15,5 +21,60 @@ header > .top-menu {
     margin: 0 10px;
     padding: 5px 0;
     height: 20px;
+    color: #fff;
+}
+header > .top-menu a {
+    margin: 0 10px;
+    padding: 5px 0;
+    color: #fff;
+}
 
+
+#container {
+    margin: 0 auto;
+    width: 1024px;
+
+}
+
+#content {
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 719px;
+    min-height: 500px;
+    background-color: #E9EBEE;
+}
+
+#content #msg {
+    margin: 15px auto;
+    text-align: center;
+}
+
+#content > .post-box {
+    margin: 15px auto;
+    padding: 5px;
+    width: 709px;
+    background-color: #ffffff
+}
+#content > .post-box > .username,
+#content > .post-box > .username > a {
+    font-size: 18px;
+    font-weight: bold;
+    color: #365899;
+}
+#content > .post-box > .time {
+    font-size: 12px;
+}
+#content > .post-box > .text {
+    margin: 15px auto;
+    font-size: 18px;
+}
+
+#side {
+    float: right;
+    margin: 0;
+    padding: 0;
+    width: 290px;
+    min-height: 500px;
+    background-color: #E9EBEE;
 }

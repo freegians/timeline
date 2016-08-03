@@ -16,13 +16,44 @@
 
 <body>
 <header>
-    <div class="top-menu"><a href="">Home</a></div>
-    <div class="top-menu"><a href="">Friends</a></div>
-    <div class="top-menu"><a href="">Login</a></div>
+    <div class="top-menu" id="menu-home"><a th:href="@{/}">Home</a></div>
+    <div class="top-menu" id="menu-login"><a th:href="@{/login}">Login</a></div>
+    <div class="top-menu" id="menu-logout"><a th:href="@{/logout}">Logout</a></div>
 </header>
-<div th:text="${userId}">${userId}</div>
-<div th:text="${userName}">${userName}</div>
-<div th:text="${role}">${role}</div>
+<!--<div th:text="${userId}">${userId}</div>-->
+<!--<div th:text="${userName}">${userName}</div>-->
+<!--<div th:text="${role}">${role}</div>-->
+
+
+<div id="container">
+    <div id="content">
+        <div id="msg">메인 페이지 입니다.</div>
+        <!--<div class="post-box">-->
+            <!--<div class="username"><a href="">freegians</a></div>-->
+            <!--<div class="time">July 26 at 4:06pm </div>-->
+            <!--<div class="text">-->
+                <!--first posting-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="post-box">-->
+            <!--<div class="username"><a href="">freegians</a></div>-->
+            <!--<div class="time">July 26 at 4:06pm </div>-->
+            <!--<div class="text">-->
+                <!--first posting-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="post-box">-->
+            <!--<div class="username"><a href="">freegians</a></div>-->
+            <!--<div class="time">July 26 at 4:06pm </div>-->
+            <!--<div class="text">-->
+                <!--first posting-->
+            <!--</div>-->
+        <!--</div>-->
+        <div id="timeline-bottom"></div>
+    </div>
+    <div id="side"></div>
+    <div style="clear:both"></div>
+</div>
 
 <script th:inline="javascript" type="text/javascript">
     "use strict";
@@ -42,13 +73,27 @@
     console.log("ctx: ", ctx);
 
     var _userId = [[${userId}]];
-    var _userName = [[${username}]];
-    var _role = [[${role}]];
+    var _userName = [[${userName}]];
+</script>
+
+<script th:src="@{js/app.js}" src="../static/js/app.js"></script>
+
+
+<script th:inline="javascript" type="text/javascript">
+    "use strict";
+
+    var timeline = new TimelineClass();
 
     $(document).ready(function() {
 
+        if(!_userName) {
+            $('#msg').text('메인 페이지 입니다.');
+        } else {
+            $('#msg').text(_userName + '의 타임라인 입니다.');
+        }
+
+        timeline.showTimeline(_userId);
     });
 </script>
-<script th:src="@{js/app.js}" src="../static/js/app.js"></script>
 </body>
 </html>

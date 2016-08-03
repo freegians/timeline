@@ -27,5 +27,6 @@ public class Timeline {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CREATED_DATE")
     private Date createdDate;
-
+    @Column(name = "ORIGINAL")
+    private int original;
 }

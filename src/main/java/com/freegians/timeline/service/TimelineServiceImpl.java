@@ -31,8 +31,19 @@ public class TimelineServiceImpl implements TimelineService {
     }
 
     @Override
+    public List<Timeline> getTimelineAllByOriginal() {
+        int original = 1;
+        return timelineRepository.findByOriginalOrderByCreatedDateDescIdDesc(original);
+    }
+
+    @Override
     public List<Timeline> getTimelineAll(long start, int range) {
         return timelineRepository.findOrderByCreatedDateDescIdDesc(start, range);
+    }
+
+    @Override
+    public List<Timeline> getTimelineAllByOriginal(long start, int range) {
+        return timelineRepository.findByOriginalOrderByCreatedDateDescIdDesc(start, range);
     }
 
     @Override

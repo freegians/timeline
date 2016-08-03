@@ -1,22 +1,16 @@
-/*
- * IE7 이하 버전에서 "'console'이(가) 정의되지 않았습니다." 에러 처리
- */
-var console = console || {
-        log:function(){},
-        warn:function(){},
-        error:function(){}
-    };
-
-
 var TimelineClass = function () {
 
-    this.getTimelineAll = function() {
+    this.getTimeline = function(_userId) {
+
         var result;
         $.ajax({
             url: ctx + '/api/timeline',
             dataType:'json',
             type:'get',
             async: false,
+            data: {
+                userId: _userId
+            },
             success:function(res){
                 result = res.data;
             }
@@ -25,9 +19,32 @@ var TimelineClass = function () {
         return result;
     }
 
+    this.showTimeline = function(_userId) {
+        if(!_userId) {
+            _userId = 0;
+        }
+        var data = this.getTimeline(_userId);
+        console.log('data:', data);
+
+
+        if(data) {
+            var str = '';
+            for(var i = 0; i < data.length; i++) {
+                str += '<div class="post-box">';
+                str += '     <div class="username"><a href="' + ctx + '/' + data[i].writerName + '">' + data[i].writerName + '</a></div>';
+                str += '     <div class="time">' + data[i].createdDate + '</div>';
+                str += '     <div class="text">';
+                str += data[i].timelineText;
+                str += '     </div>';
+                str += '</div>';
+            }
+            console.log(str);
+            $('#timeline-bottom').before(str);
+        }
+
+
+    }
+
 }
 
 
-var timeline = new TimelineClass();
-var timelineAll = timeline.getTimelineAll();
-console.log("timelineAll: ", timelineAll);
