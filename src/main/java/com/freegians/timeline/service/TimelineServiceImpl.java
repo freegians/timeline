@@ -6,6 +6,7 @@ import com.freegians.timeline.security.CurrentUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,17 +26,22 @@ public class TimelineServiceImpl implements TimelineService {
     UsersService usersService;
 
     @Override
-    public List<Timeline> getTimeline() {
-        return timelineRepository.findByUserIdOrderByCreatedDateDescIdDesc(usersService.getCurrentUser().getUserId());
+    public List<Timeline> getTimelineAll() {
+        return timelineRepository.findAll(new Sort(new Sort.Order(Sort.Direction.DESC, "createdDate"), new Sort.Order(Sort.Direction.DESC, "id")));
     }
 
     @Override
-    public List<Timeline> getTimeline(long start, int range) {
-        return timelineRepository.findByUserIdOrderByCreatedDateDescIdDesc(usersService.getCurrentUser().getUserId(), start, range);
+    public List<Timeline> getTimelineAll(long start, int range) {
+        return timelineRepository.findOrderByCreatedDateDescIdDesc(start, range);
     }
 
     @Override
     public List<Timeline> getTimeline(long userId) {
         return timelineRepository.findByUserIdOrderByCreatedDateDescIdDesc(userId);
+    }
+
+    @Override
+    public List<Timeline> getTimeline(long userId, long start, int range) {
+        return timelineRepository.findByUserIdOrderByCreatedDateDescIdDesc(userId, start, range);
     }
 }

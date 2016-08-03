@@ -30,33 +30,117 @@ public class TimelineApiController extends BaseController{
     @Autowired
     TimelineService timelineService;
 
+    @Autowired
+    UsersService usersService;
+
+
 
     /**
-     * 자신의 타임라인 리스트 전체
+     * 타임라인 리스트
+     * @param userId
+     * @param start
+     * @param range
      * @return
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
     public Object getTimeline(
+            @RequestParam(value = "userId", required=false, defaultValue = "0") Long userId,
             @RequestParam(value = "start", required=false, defaultValue = "0") Long start,
             @RequestParam(value = "range", required=false, defaultValue = "10") Integer range
     ) {
         try{
 
             if(start <= 0) {
-                return createSuccessResponse(timelineService.getTimeline());
+                if(userId > 0) {
+                    return createSuccessResponse(timelineService.getTimeline(userId));
+                } else {
+                    return createSuccessResponse(timelineService.getTimelineAll());
+                }
             } else {
                 Map<String, Object> result = new HashMap<String, Object>();
                 long next = start + range;
+                result.put("next", next);
+
                 start = start -1;
 
-                result.put("timeline", timelineService.getTimeline(start, range));
-                result.put("next", next);
+                if(userId > 0) {
+                    result.put("timeline", timelineService.getTimeline(userId, start, range));
+                } else {
+                    result.put("timeline", timelineService.getTimelineAll(start, range));
+                }
+
                 return createSuccessResponse(result);
             }
         }catch (Exception e){
             return createFailureResponse("Failed to get timeline.", e);
         }
     }
+
+
+
+//    /**
+//     * 특정 유저 타임 라인 리스트
+//     * @param userId
+//     * @param start
+//     * @param range
+//     * @return
+//     */
+//    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
+//    @ResponseBody
+//    public Object getTimeline(
+//            @PathVariable("userId") Long userId,
+//            @RequestParam(value = "start", required=false, defaultValue = "0") Long start,
+//            @RequestParam(value = "range", required=false, defaultValue = "10") Integer range
+//    ) {
+//        try{
+//
+//            if(start <= 0) {
+//                return createSuccessResponse(timelineService.getTimeline(userId));
+//            } else {
+//                Map<String, Object> result = new HashMap<String, Object>();
+//                long next = start + range;
+//                start = start -1;
+//
+//                result.put("timeline", timelineService.getTimeline(userId, start, range));
+//                result.put("next", next);
+//                return createSuccessResponse(result);
+//            }
+//        }catch (Exception e){
+//            return createFailureResponse("Failed to get timeline.", e);
+//        }
+//    }
+//
+//
+//    /**
+//     * 타임라인 리스트 전체
+//     * @return
+//     */
+//    @RequestMapping(value = "/all", method = RequestMethod.GET)
+//    @ResponseBody
+//    public Object getTimelineAll(
+//            @RequestParam(value = "start", required=false, defaultValue = "0") Long start,
+//            @RequestParam(value = "range", required=false, defaultValue = "10") Integer range
+//    ) {
+//        try{
+//
+//            if(start <= 0) {
+//                return createSuccessResponse(timelineService.getTimelineAll());
+//            } else {
+//                Map<String, Object> result = new HashMap<String, Object>();
+//                long next = start + range;
+//                start = start -1;
+//
+//                result.put("timeline", timelineService.getTimelineAll(start, range));
+//                result.put("next", next);
+//                return createSuccessResponse(result);
+//            }
+//        }catch (Exception e){
+//            return createFailureResponse("Failed to get timeline.", e);
+//        }
+//    }
+
+
+
 
 }

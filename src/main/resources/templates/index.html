@@ -1,13 +1,54 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>index</title>
+
+<head layout:fragment="header" xmlns:layout="http://www.springframework.org/schema/security" xmlns:th="http://www.thymeleaf.org">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <title>Timeline</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}" href="../static/css/app.css" />
+
+    <script type="text/javascript" src="/webjars/jquery/2.2.3/jquery.min.js"></script>
+
 </head>
 
 <body>
-<div>index.html</div>
+<header>
+    <div class="top-menu"><a href="">Home</a></div>
+    <div class="top-menu"><a href="">Friends</a></div>
+    <div class="top-menu"><a href="">Login</a></div>
+</header>
 <div th:text="${userId}">${userId}</div>
 <div th:text="${userName}">${userName}</div>
 <div th:text="${role}">${role}</div>
+
+<script th:inline="javascript" type="text/javascript">
+    "use strict";
+
+    /*
+     * IE7 이하 버전에서 "'console'이(가) 정의되지 않았습니다." 에러 처리
+     */
+    var console = console || {
+                log:function(){},
+                warn:function(){},
+                error:function(){}
+            };
+
+    if(!ctx) var ctx = {};
+    ctx = /*[[@{/}]]*/ './';
+    ctx = ctx.substr(0, ctx.length-1);
+    console.log("ctx: ", ctx);
+
+    var _userId = [[${userId}]];
+    var _userName = [[${username}]];
+    var _role = [[${role}]];
+
+    $(document).ready(function() {
+
+    });
+</script>
+<script th:src="@{js/app.js}" src="../static/js/app.js"></script>
 </body>
 </html>

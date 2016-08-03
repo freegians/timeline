@@ -50,7 +50,7 @@ public class UserApiController extends BaseController{
             @PathVariable("userName") String userName
     ) {
         try {
-            return createSuccessResponse(usersService.createUser(userName, "USER"));
+            return createSuccessResponse(usersService.createUser(userName, "ROLE_USER"));
         } catch (Exception e) {
             return createFailureResponse("Fail to create user", e);
         }

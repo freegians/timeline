@@ -50,6 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers("/login").permitAll()
                     .antMatchers("/logout").permitAll()
+                    .antMatchers("/api/timeline/**").permitAll()
                     .antMatchers("/api/**").fullyAuthenticated()
                     .antMatchers("/**").permitAll();
 

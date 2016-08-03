@@ -23,6 +23,11 @@ public class MainController {
 	@Autowired
 	UsersService usersService;
 
+
+	/**
+	 * 인덱스 페이지
+	 * @return
+     */
 	@RequestMapping("/")
 	public ModelAndView hello() {
 		ModelAndView mav = new ModelAndView();

@@ -13,9 +13,11 @@ import java.util.Map;
  */
 public interface TimelineService {
 
-    List<Timeline> getTimeline();
+    List<Timeline> getTimelineAll();
 
-    List<Timeline> getTimeline(long start, int range);
+    List<Timeline> getTimelineAll(long start, int range);
 
     List<Timeline> getTimeline(long userId);
+
+    List<Timeline> getTimeline(long userId, long start, int range);
 }
