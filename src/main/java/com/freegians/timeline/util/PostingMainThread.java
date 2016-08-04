@@ -40,7 +40,7 @@ public class PostingMainThread implements Runnable {
         LOG.info("Posting Main thread start.");
         try {
             while(true) {
-                if(threads.size() <= limit) {
+                if(threads.size() <= 2) {
                     LOG.info("Posting Main thread doing.");
                     LOG.info(">>>>>>>>>>>>>>>>>>>>>>>>>>> " + threads.size());
 

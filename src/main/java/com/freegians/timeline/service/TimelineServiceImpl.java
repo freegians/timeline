@@ -1,5 +1,6 @@
 package com.freegians.timeline.service;
 
+import com.freegians.timeline.domain.PostQ;
 import com.freegians.timeline.domain.Timeline;
 import com.freegians.timeline.repository.TimelineRepository;
 import com.freegians.timeline.security.CurrentUser;
@@ -24,6 +25,9 @@ public class TimelineServiceImpl implements TimelineService {
 
     @Autowired
     UsersService usersService;
+
+    @Autowired
+    PostQService postQService;
 
     @Override
     public List<Timeline> getTimelineAll() {
@@ -54,5 +58,27 @@ public class TimelineServiceImpl implements TimelineService {
     @Override
     public List<Timeline> getTimeline(long userId, long start, int range) {
         return timelineRepository.findByUserIdOrderByCreatedDateDescIdDesc(userId, start, range);
+    }
+
+
+    @Override
+    public Timeline postTimeline(Timeline timeline) {
+        Timeline timelineResult = new Timeline();
+        timelineResult = timelineRepository.save(timeline);
+
+
+        if(timeline.getOriginal() == 1) {
+            PostQ postQ = new PostQ();
+            postQ.setTimelineId(timelineResult.getId());
+
+            postQService.savePostQ(postQ);
+        }
+
+        return timelineResult;
+    }
+
+    @Override
+    public Timeline getTimelineById(long id) {
+        return timelineRepository.findOne(id);
     }
 }

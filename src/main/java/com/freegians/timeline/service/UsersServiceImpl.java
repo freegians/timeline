@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -75,6 +76,11 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
+    public List<Users> getUserList() {
+        return usersRepository.findAll();
+    }
+
+    @Override
     public CurrentUser getCurrentUser() {
 
         try {
@@ -88,5 +94,10 @@ public class UsersServiceImpl implements UsersService {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    @Override
+    public List<Users> getFollowerList(long userId) {
+        return usersRepository.findByUserId(userId);
     }
 }

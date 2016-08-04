@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head layout:fragment="header" xmlns:layout="http://www.springframework.org/schema/security" xmlns:th="http://www.thymeleaf.org">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <title>Sign Up</title>
+    <style>
+        #sign-form {
+            margin: 200px auto;
+            width: 500px;
+        }
+        .sign-form-input > * {
+            display: inline-block;
+        }
+        .sign-form-input > label {
+            width: 80px;
+        }
+    </style>
+
+
+
+    <script type="text/javascript" src="/webjars/jquery/2.2.3/jquery.min.js"></script>
+
+</head>
+
+<body>
+<div id="sign-form">
+    <h3>아이디만 입력하시면 비밀번호는 아이디와 동일하게 저장 됩니다.</h3>
+        <div class="sign-form-input">
+            <label>UserName</label>
+            <div>
+                <input type="text" name="username" id="userName" placeholder="UserName" />
+            </div>
+        </div>
+        <div class="sign-form-input">
+            <div>
+                <a href="javascript:void(0);" onClick="signUp()">회원가입</a>
+            </div>
+        </div>
+    <div>
+        <a th:href="@{/}">메인페이지로 가기</a>
+    </div>
+
+</div>
+
+<script th:inline="javascript" type="text/javascript">
+    "use strict";
+
+    /*
+     * IE7 이하 버전에서 "'console'이(가) 정의되지 않았습니다." 에러 처리
+     */
+    var console = console || {
+                log:function(){},
+                warn:function(){},
+                error:function(){}
+            };
+
+    if(!ctx) var ctx = {};
+    ctx = /*[[@{/}]]*/ './';
+    ctx = ctx.substr(0, ctx.length-1);
+
+</script>
+
+<script th:inline="javascript" type="text/javascript">
+    "use strict";
+
+    var signUp = function() {
+
+        var result;
+        $.ajax({
+            url: ctx + '/api/user/' + $('#userName').val(),
+            dataType:'json',
+            type:'put',
+            async: false,
+            success:function(res){
+                if(res.success) {
+                    alert('회원가입이 정상적으로 처리 됐습니다\n\n아이디: ' + res.data.users.userName);
+                    document.location.href = /*[[@{/}]]*/;
+                } else {
+                    alert(res.msg);
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -17,8 +17,10 @@
 <body>
 <header>
     <div class="top-menu" id="menu-home"><a th:href="@{/}">Home</a></div>
-    <div class="top-menu" id="menu-login"><a th:href="@{/login}">Login</a></div>
-    <div class="top-menu" id="menu-logout"><a th:href="@{/logout}">Logout</a></div>
+    <div class="top-menu" id="menu-login" th:if="${#httpServletRequest.remoteUser} == null"><a th:href="@{/login}">Login</a></div>
+    <div class="top-menu" th:if="${#httpServletRequest.remoteUser}" th:inline="text">[[${#httpServletRequest.remoteUser}]]</div>
+    <div class="top-menu" id="menu-logout" th:if="${#httpServletRequest.remoteUser}"><a th:href="@{/logout}">Logout</a></div>
+
 </header>
 <!--<div th:text="${userId}">${userId}</div>-->
 <!--<div th:text="${userName}">${userName}</div>-->
@@ -28,30 +30,23 @@
 <div id="container">
     <div id="content">
         <div id="msg">메인 페이지 입니다.</div>
-        <!--<div class="post-box">-->
-            <!--<div class="username"><a href="">freegians</a></div>-->
-            <!--<div class="time">July 26 at 4:06pm </div>-->
-            <!--<div class="text">-->
-                <!--first posting-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="post-box">-->
-            <!--<div class="username"><a href="">freegians</a></div>-->
-            <!--<div class="time">July 26 at 4:06pm </div>-->
-            <!--<div class="text">-->
-                <!--first posting-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="post-box">-->
-            <!--<div class="username"><a href="">freegians</a></div>-->
-            <!--<div class="time">July 26 at 4:06pm </div>-->
-            <!--<div class="text">-->
-                <!--first posting-->
-            <!--</div>-->
-        <!--</div>-->
+        <div id="timeline-text-box" th:if="${#httpServletRequest.remoteUser} and (${#httpServletRequest.remoteUser} == ${userName})">
+            <textarea id="timeline-text" placeholder="글을 입력 하세요."></textarea>
+            <button id="btn-posting">작성하기</button>
+        </div>
+        <div id="timeline-top"></div>
         <div id="timeline-bottom"></div>
     </div>
-    <div id="side"></div>
+    <div id="side">
+        <div id="follower">
+            <div class="tit">팔로워 리스트</div>
+            <div id="follower-list"></div>
+        </div>
+        <div id="users">
+            <div class="tit">유저 리스트</div>
+            <div id="users-list"></div>
+        </div>
+    </div>
     <div style="clear:both"></div>
 </div>
 
@@ -70,7 +65,6 @@
     if(!ctx) var ctx = {};
     ctx = /*[[@{/}]]*/ './';
     ctx = ctx.substr(0, ctx.length-1);
-    console.log("ctx: ", ctx);
 
     var _userId = [[${userId}]];
     var _userName = [[${userName}]];
@@ -83,6 +77,8 @@
     "use strict";
 
     var timeline = new TimelineClass();
+    var user = new UserClass();
+    var follower = new FollowerClass();
 
     $(document).ready(function() {
 
@@ -93,7 +89,17 @@
         }
 
         timeline.showTimeline(_userId);
+        user.showUserListAll();
+        follower.showFollowerList(_userId);
+
+        $('#btn-posting').click(function() {
+            timeline.posting($('#timeline-text').val());
+        });
     });
+
+
+
+
 </script>
 </body>
 </html>

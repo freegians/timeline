@@ -24,4 +24,8 @@ public interface TimelineService {
     List<Timeline> getTimeline(long userId);
 
     List<Timeline> getTimeline(long userId, long start, int range);
+
+    Timeline postTimeline(Timeline timeline);
+
+    Timeline getTimelineById(long id);
 }

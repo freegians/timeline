@@ -56,4 +56,9 @@ public class MainController {
 		return "login";
 	}
 
+	@RequestMapping("/signup")
+	public String signUp() {
+		return "signup";
+	}
+
 }

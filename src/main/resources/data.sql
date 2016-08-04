@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS `FOLLOWER`;
 
-CREATE TABLE `FOLLOWER` (
+CREATE  TABLE `FOLLOWER` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '팔로우 인덱스',
   `USER_ID` bigint(20) unsigned NOT NULL COMMENT '유저 아이디',
   `FOLLOWER_ID` bigint(20) unsigned NOT NULL COMMENT '팔로워 아이디',
@@ -29,16 +29,17 @@ LOCK TABLES `TIMELINE` WRITE;
 
 INSERT INTO `TIMELINE` (`USER_ID`, `WRITER_ID`, `WRITER_NAME`, `TIMELINE_TEXT`, `CREATED_DATE`, `ORIGINAL`)
 VALUES
-	(1,1,'freegians','first posting\n','2016-08-03 16:46:32',1),
-	(1,1,'freegians','second posting\n','2016-08-03 16:46:32',1),
-	(2,2,'user1','first posting by user1\n','2016-08-03 16:46:32',1),
-	(2,2,'user1','second posting by user1\n','2016-08-03 16:46:32',1),
-	(2,1,'freegians','first posting\n','2016-08-03 16:46:32',0),
-	(2,1,'freegians','second posting\n','2016-08-03 16:46:32',0),
-	(3,3,'user2','first posting by user2\n','2016-08-03 16:46:32',1),
-	(3,3,'user2','second posting by user2\n','2016-08-03 16:46:32',1),
-	(3,1,'freegians','first posting\n','2016-08-03 16:46:32',0),
-	(3,1,'freegians','second posting\n','2016-08-03 16:46:32',0);
+	(1,1,'freegians','first posting\n',CURRENT_TIMESTAMP,1),
+	(1,1,'freegians','second posting\n',CURRENT_TIMESTAMP,1),
+	(2,2,'user1','first posting by user1\n',CURRENT_TIMESTAMP,1),
+	(2,2,'user1','second posting by user1\n',CURRENT_TIMESTAMP,1),
+	(2,1,'freegians','first posting\n',CURRENT_TIMESTAMP,0),
+	(2,1,'freegians','second posting\n',CURRENT_TIMESTAMP,0),
+	(3,3,'user2','first posting by user2\n',CURRENT_TIMESTAMP,1),
+	(3,3,'user2','second posting by user2\n',CURRENT_TIMESTAMP,1),
+	(3,1,'freegians','first posting\n',CURRENT_TIMESTAMP,0),
+	(3,1,'freegians','second posting\n',CURRENT_TIMESTAMP,0),
+	(1,1,'freegians','aaaaaa\naaaa\naaa\naaaaa\n',CURRENT_TIMESTAMP,1);
 
 UNLOCK TABLES;
 
@@ -85,3 +86,13 @@ VALUES
 	('user2','user2',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 
 UNLOCK TABLES;
+
+
+
+DROP TABLE IF EXISTS `POST_Q`;
+
+CREATE TABLE `POST_Q` (
+  `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '인덱스',
+  `TIMELINE_ID` bigint(20) NOT NULL COMMENT '타임라인 원본 아이디',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -15,6 +15,8 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import javax.annotation.PostConstruct;
 import javax.servlet.Filter;
 import java.nio.charset.Charset;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @EnableAutoConfiguration
 @ComponentScan
@@ -45,10 +47,11 @@ public class TimelineApplication {
 		return characterEncodingFilter;
 	}
 
-//	@PostConstruct
+	@PostConstruct
 	public void postConstruct() {
-			Thread t = new Thread(new PostingMainThread(1000, 2));
-			t.start();
+//			Thread t = new Thread(new PostingMainThread(1000, 2));
+//			t.start();
+
 	}
 
 }

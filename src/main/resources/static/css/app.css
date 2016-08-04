@@ -54,7 +54,7 @@ header > .top-menu a {
     margin: 15px auto;
     padding: 5px;
     width: 709px;
-    background-color: #ffffff
+    background-color: #ffffff;
 }
 #content > .post-box > .username,
 #content > .post-box > .username > a {
@@ -70,6 +70,18 @@ header > .top-menu a {
     font-size: 18px;
 }
 
+#timeline-text-box {
+    margin: 15px auto;
+    font-size: 18px;
+    background-color: #fff;
+}
+#timeline-text {
+    margin: 15px;
+    width: 681px;
+    height: 140px;
+    font-size: 18px;
+}
+
 #side {
     float: right;
     margin: 0;
@@ -77,4 +89,20 @@ header > .top-menu a {
     width: 290px;
     min-height: 500px;
     background-color: #E9EBEE;
+}
+
+#users,
+#follower {
+    margin: 15px 0;
+    padding: 5px;
+    color: #365899;
+    background-color: #fff;
+}
+#users > .tit,
+#follower > .tit {
+    font-weight: bold;
+}
+#users a,
+#follower a {
+    color: #365899;
 }

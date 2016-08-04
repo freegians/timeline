@@ -2,9 +2,11 @@ package com.freegians.timeline.controller.api;
 
 import com.freegians.timeline.controller.BaseController;
 import com.freegians.timeline.domain.Timeline;
+import com.freegians.timeline.service.PostQService;
 import com.freegians.timeline.service.TimelineService;
 import com.freegians.timeline.service.TimelineServiceImpl;
 import com.freegians.timeline.service.UsersService;
+import com.freegians.timeline.util.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,9 @@ public class TimelineApiController extends BaseController{
 
     @Autowired
     UsersService usersService;
+
+    @Autowired
+    PostQService postQService;
 
 
 
@@ -78,6 +83,30 @@ public class TimelineApiController extends BaseController{
     }
 
 
+    @RequestMapping(value = "/post", method = RequestMethod.POST)
+    @ResponseBody
+    public Object postTimeline(
+            @RequestParam(value = "timelineText", required=true) String timelineText
+    ) {
+        try{
+            TimeUtil timeUtil = new TimeUtil();
+            Timeline _timeline = new Timeline();
+            _timeline.setUserId(usersService.getCurrentUser().getUserId());
+            _timeline.setWriterId(usersService.getCurrentUser().getUserId());
+            _timeline.setWriterName(usersService.getCurrentUser().getUsername());
+            _timeline.setTimelineText(timelineText);
+            _timeline.setCreatedDate(timeUtil.getNowTimestamp());
+            _timeline.setOriginal(1);
+
+            Timeline timeline = new Timeline();
+            timeline = timelineService.postTimeline(_timeline);
+
+            postQService.workPostQ();
+            return createSuccessResponse(timeline);
+        }catch (Exception e){
+            return createFailureResponse("Failed to posting.", e);
+        }
+    }
 
 //    /**
 //     * 특정 유저 타임 라인 리스트

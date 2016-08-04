@@ -19,7 +19,7 @@ public class Timeline {
     @Column(name = "USER_ID")
     private long userId;
     @Column(name = "WRITER_ID")
-    private long followerId;
+    private long writerId;
     @Column(name = "WRITER_NAME")
     private String writerName;
     @Column(name = "TIMELINE_TEXT")
@@ -29,4 +29,25 @@ public class Timeline {
     private Date createdDate;
     @Column(name = "ORIGINAL")
     private int original;
+
+    public Timeline(){}
+    public Timeline(long id, long userId, long writerId, String writerName, String timelineText, Date createdDate, int original) {
+        super();
+        this.id = id;
+        this.userId = userId;
+        this.writerId = writerId;
+        this.writerName = writerName;
+        this.timelineText = timelineText;
+        this.createdDate = createdDate;
+        this.original = original;
+    }
+    public Timeline(long userId, long writerId, String writerName, String timelineText, Date createdDate, int original) {
+        super();
+        this.userId = userId;
+        this.writerId = writerId;
+        this.writerName = writerName;
+        this.timelineText = timelineText;
+        this.createdDate = createdDate;
+        this.original = original;
+    }
 }

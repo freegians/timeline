@@ -4,6 +4,7 @@ import com.freegians.timeline.domain.UserRole;
 import com.freegians.timeline.domain.Users;
 import com.freegians.timeline.security.CurrentUser;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,5 +21,9 @@ public interface UsersService {
 
     Users getUser(String userName);
 
+    List<Users> getUserList();
+
     CurrentUser getCurrentUser();
+
+    List<Users> getFollowerList(long userId);
 }

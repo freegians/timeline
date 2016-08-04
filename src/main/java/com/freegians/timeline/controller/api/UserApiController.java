@@ -6,10 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by freegians on 2016. 8. 1..
@@ -56,6 +53,29 @@ public class UserApiController extends BaseController{
         }
     }
 
+    @RequestMapping(value = "/listAll", method = RequestMethod.GET)
+    @ResponseBody
+    public Object getUserListAll(
+    ) {
+        try {
+            return createSuccessResponse(usersService.getUserList());
+        } catch (Exception e) {
+            return createFailureResponse("Fail to get user list", e);
+        }
+    }
+
+
+    @RequestMapping(value = "/follower", method = RequestMethod.GET)
+    @ResponseBody
+    public Object getFollowerList(
+            @RequestParam(value = "userId", required=false, defaultValue = "0") Long userId
+    ) {
+        try {
+            return createSuccessResponse(usersService.getFollowerList(userId));
+        } catch (Exception e) {
+            return createFailureResponse("Fail to follower list", e);
+        }
+    }
 
 
 
