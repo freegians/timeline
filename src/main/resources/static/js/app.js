@@ -154,6 +154,44 @@ var FollowerClass = function () {
 
     }
 
+    this.following = function(_userId) {
+
+        var result;
+        $.ajax({
+            url: ctx + '/api/user/following',
+            dataType:'json',
+            type:'put',
+            async: false,
+            data: {
+                userId: _userId
+            },
+            success:function(res){
+                result = res.data;
+            }
+        });
+
+        return result;
+    }
+
+    this.unFollowing = function(_userId) {
+
+        var result;
+        $.ajax({
+            url: ctx + '/api/user/unFollowing?userId=' + _userId,
+            dataType:'json',
+            type:'delete',
+            async: false,
+            //data: {
+            //    userId: _userId
+            //},
+            success:function(res){
+                result = res.data;
+            }
+        });
+
+        return result;
+    }
+
 }
 
 

@@ -2,10 +2,7 @@ package com.freegians.timeline.controller.api;
 
 import com.freegians.timeline.controller.BaseController;
 import com.freegians.timeline.domain.Timeline;
-import com.freegians.timeline.service.PostQService;
-import com.freegians.timeline.service.TimelineService;
-import com.freegians.timeline.service.TimelineServiceImpl;
-import com.freegians.timeline.service.UsersService;
+import com.freegians.timeline.service.*;
 import com.freegians.timeline.util.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Time;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,6 +31,9 @@ public class TimelineApiController extends BaseController{
 
     @Autowired
     PostQService postQService;
+
+    @Autowired
+    AsyncService asyncService;
 
 
 
@@ -101,7 +98,10 @@ public class TimelineApiController extends BaseController{
             Timeline timeline = new Timeline();
             timeline = timelineService.postTimeline(_timeline);
 
-            postQService.workPostQ();
+//            postQService.workPostQ();
+
+//            asyncService.testAsyncAnnotationForMethodsWithReturnType();
+
             return createSuccessResponse(timeline);
         }catch (Exception e){
             return createFailureResponse("Failed to posting.", e);

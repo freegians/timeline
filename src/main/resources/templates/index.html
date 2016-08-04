@@ -85,7 +85,20 @@
         if(!_userName) {
             $('#msg').text('메인 페이지 입니다.');
         } else {
-            $('#msg').text(_userName + '의 타임라인 입니다.');
+            var str = _userName + '의 타임라인 입니다.';
+            str += '<div><button id="btn-following">팔로잉하기</button> <button id="btn-unfollowing">언팔로잉하기</button></div>';
+            $('#msg').html(str);
+
+            $('#btn-following').unbind('click');
+            $('#btn-following').click(function() {
+                follower.following(_userId);
+            });
+
+            $('#btn-unfollowing').unbind('click');
+            $('#btn-unfollowing').click(function() {
+                var data = follower.unFollowing(_userId);
+                console.log(data);
+            });
         }
 
         timeline.showTimeline(_userId);

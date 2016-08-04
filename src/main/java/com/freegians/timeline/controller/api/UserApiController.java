@@ -1,6 +1,8 @@
 package com.freegians.timeline.controller.api;
 
 import com.freegians.timeline.controller.BaseController;
+import com.freegians.timeline.domain.Follower;
+import com.freegians.timeline.service.FollowerService;
 import com.freegians.timeline.service.UsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +22,9 @@ public class UserApiController extends BaseController{
 
     @Autowired
     UsersService usersService;
+
+    @Autowired
+    FollowerService followerService;
 
     /**
      * 유저 전체 카운트
@@ -74,6 +79,51 @@ public class UserApiController extends BaseController{
             return createSuccessResponse(usersService.getFollowerList(userId));
         } catch (Exception e) {
             return createFailureResponse("Fail to follower list", e);
+        }
+    }
+
+
+    @RequestMapping(value = "/following", method = RequestMethod.PUT)
+    @ResponseBody
+    public Object putFollowing(
+            @RequestParam(value = "userId", required=false, defaultValue = "0") Long userId
+    ) {
+        try {
+            if(usersService.getCurrentUser() != null) {
+                Follower follower = new Follower();
+                follower.setUserId(userId);
+                follower.setFollowerId(usersService.getCurrentUser().getUserId());
+                return createSuccessResponse(followerService.saveFollower(follower));
+            } else {
+                return createSuccessResponse("로그인이 필요합니다.");
+            }
+        } catch (Exception e) {
+            return createFailureResponse("Fail to following", e);
+        }
+    }
+
+
+    @RequestMapping(value = "/unFollowing", method = RequestMethod.DELETE)
+    @ResponseBody
+    public Object deleteFollowing(
+            @RequestParam(value = "userId", required=false, defaultValue = "0") Long userId
+    ) {
+        try {
+            if(usersService.getCurrentUser() != null) {
+//                Follower follower = new Follower();
+//                follower.setUserId(userId);
+//                follower.setFollowerId(usersService.getCurrentUser().getUserId());
+
+
+                Follower follower = followerService.getFollower(userId, usersService.getCurrentUser().getUserId());
+
+                followerService.deleteFollower(follower.getId());
+                return createSuccessResponse("Success unfollowing");
+            } else {
+                return createSuccessResponse("로그인이 필요합니다.");
+            }
+        } catch (Exception e) {
+            return createFailureResponse("Fail to unfollowing", e);
         }
     }
 
