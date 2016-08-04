@@ -2,13 +2,18 @@ package com.freegians.timeline.controller.api;
 
 import com.freegians.timeline.controller.BaseController;
 import com.freegians.timeline.domain.Timeline;
-import com.freegians.timeline.service.*;
+import com.freegians.timeline.service.PostQService;
+import com.freegians.timeline.service.TimelineService;
+import com.freegians.timeline.service.UsersService;
 import com.freegians.timeline.util.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,10 +36,6 @@ public class TimelineApiController extends BaseController{
 
     @Autowired
     PostQService postQService;
-
-    @Autowired
-    AsyncService asyncService;
-
 
 
     /**
@@ -98,7 +99,7 @@ public class TimelineApiController extends BaseController{
             Timeline timeline = new Timeline();
             timeline = timelineService.postTimeline(_timeline);
 
-//            postQService.workPostQ();
+            postQService.workPostQ();
 
 //            asyncService.testAsyncAnnotationForMethodsWithReturnType();
 

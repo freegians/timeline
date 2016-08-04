@@ -41,7 +41,7 @@ public class PostQServiceImpl implements PostQService {
     }
 
     @Override
-    public DeferredResult<Long> workPostQ() {
+    public void workPostQ() {
         DeferredResult<Long> deferredResult = new DeferredResult<Long>();
         try {
             PostQ postQ = getPostQMin();
@@ -61,17 +61,14 @@ public class PostQServiceImpl implements PostQService {
                         _timeline.setCreatedDate(timeline.getCreatedDate());
                         _timeline.setOriginal(0);
                         timelineService.postTimeline(_timeline);
-                        Thread.sleep(1000000L);
+//                        Thread.sleep(1000000L);
                     }
                     postQRepository.delete(postQ.getId());
                     LOG.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + postQ.getId());
                 }
             }
-            deferredResult.setResult(postQ.getId());
-            return deferredResult;
         } catch(Exception e) {
             e.getMessage();
         }
-        return deferredResult;
     }
 }
