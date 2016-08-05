@@ -109,68 +109,28 @@ public class TimelineApiController extends BaseController{
         }
     }
 
-//    /**
-//     * 특정 유저 타임 라인 리스트
-//     * @param userId
-//     * @param start
-//     * @param range
-//     * @return
-//     */
-//    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-//    @ResponseBody
-//    public Object getTimeline(
-//            @PathVariable("userId") Long userId,
-//            @RequestParam(value = "start", required=false, defaultValue = "0") Long start,
-//            @RequestParam(value = "range", required=false, defaultValue = "10") Integer range
-//    ) {
-//        try{
-//
-//            if(start <= 0) {
-//                return createSuccessResponse(timelineService.getTimeline(userId));
-//            } else {
-//                Map<String, Object> result = new HashMap<String, Object>();
-//                long next = start + range;
-//                start = start -1;
-//
-//                result.put("timeline", timelineService.getTimeline(userId, start, range));
-//                result.put("next", next);
-//                return createSuccessResponse(result);
-//            }
-//        }catch (Exception e){
-//            return createFailureResponse("Failed to get timeline.", e);
-//        }
-//    }
-//
-//
-//    /**
-//     * 타임라인 리스트 전체
-//     * @return
-//     */
-//    @RequestMapping(value = "/all", method = RequestMethod.GET)
-//    @ResponseBody
-//    public Object getTimelineAll(
-//            @RequestParam(value = "start", required=false, defaultValue = "0") Long start,
-//            @RequestParam(value = "range", required=false, defaultValue = "10") Integer range
-//    ) {
-//        try{
-//
-//            if(start <= 0) {
-//                return createSuccessResponse(timelineService.getTimelineAll());
-//            } else {
-//                Map<String, Object> result = new HashMap<String, Object>();
-//                long next = start + range;
-//                start = start -1;
-//
-//                result.put("timeline", timelineService.getTimelineAll(start, range));
-//                result.put("next", next);
-//                return createSuccessResponse(result);
-//            }
-//        }catch (Exception e){
-//            return createFailureResponse("Failed to get timeline.", e);
-//        }
-//    }
 
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    @ResponseBody
+    public Object deleteTimeline(
+            @RequestParam(value = "id", required=true) Long id
+    ) {
+        try{
 
-
+            if(usersService.getCurrentUser() != null) {
+                Timeline timeline = timelineService.getTimelineById(id);
+                if(usersService.getCurrentUser().getUserId() == timeline.getUserId()) {
+                    timelineService.deleteTimelineById(id);
+                    return createSuccessResponse("success", "Success to delete timeline");
+                } else {
+                    return createFailureResponse("자신의 글만 삭제 가능 합니다.");
+                }
+            } else {
+                return createFailureResponse("로그인이 필요합니다.");
+            }
+        } catch (Exception e){
+            return createFailureResponse("Failed to delete timeline.", e);
+        }
+    }
 
 }

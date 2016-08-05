@@ -28,4 +28,6 @@ public interface TimelineService {
     Timeline postTimeline(Timeline timeline);
 
     Timeline getTimelineById(long id);
+
+    void deleteTimelineById(long id);
 }

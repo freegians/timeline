@@ -95,7 +95,7 @@ public class UserApiController extends BaseController{
                 follower.setFollowerId(usersService.getCurrentUser().getUserId());
                 return createSuccessResponse(followerService.saveFollower(follower));
             } else {
-                return createSuccessResponse("로그인이 필요합니다.");
+                return createFailureResponse("로그인이 필요합니다.");
             }
         } catch (Exception e) {
             return createFailureResponse("Fail to following", e);
@@ -118,9 +118,9 @@ public class UserApiController extends BaseController{
                 Follower follower = followerService.getFollower(userId, usersService.getCurrentUser().getUserId());
 
                 followerService.deleteFollower(follower.getId());
-                return createSuccessResponse("Success unfollowing");
+                return createSuccessResponse("success", "Success unfollowing");
             } else {
-                return createSuccessResponse("로그인이 필요합니다.");
+                return createFailureResponse("로그인이 필요합니다.");
             }
         } catch (Exception e) {
             return createFailureResponse("Fail to unfollowing", e);

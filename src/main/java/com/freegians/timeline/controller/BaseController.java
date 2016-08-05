@@ -56,6 +56,13 @@ abstract public class BaseController {
 		return result;
 	}
 
+	protected Map<String, Object> createFailureResponse(String msg) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("success", Boolean.FALSE);
+		result.put("msg", msg);
+		return result;
+	}
+
 
 	protected Map<String, Object> createSuccessResponse(String msg, Object data, Object metaData) {
 		Map<String, Object> result = new HashMap<String, Object>();

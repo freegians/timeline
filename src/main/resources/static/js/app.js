@@ -4,6 +4,8 @@ function nl2br(str){
 
 var TimelineClass = function () {
 
+    var self = this;
+
     this.getTimeline = function(_userId) {
 
         var result;
@@ -38,16 +40,41 @@ var TimelineClass = function () {
                 timelineText = nl2br(timelineText);
                 str += '<div class="post-box">';
                 str += '     <div class="username"><a href="' + ctx + '/' + data[i].writerName + '">' + data[i].writerName + '</a></div>';
-                str += '     <div class="time">' + data[i].createdDate + '</div>';
+                str += '     <div class="time">' + data[i].createdDate + ' <button post-id="' + data[i].id + '" class="btn-delete-timeline">글삭제</button></div>';
                 str += '     <div class="text">';
                 str += timelineText;
                 str += '     </div>';
                 str += '</div>';
             }
             $(str).insertBefore('#timeline-bottom');
+
+            $('.btn-delete-timeline').each(function() {
+                $(this).unbind('click');
+                $(this).click(function() {
+                    self.deleteTimeline($(this).attr('post-id'));
+                });
+            })
         }
 
 
+    }
+
+    this.deleteTimeline = function(_id) {
+
+        var result;
+        $.ajax({
+            url: ctx + '/api/timeline/delete?id=' + _id,
+            dataType:'json',
+            type:'delete',
+            async: false,
+            //data: {
+            //    id: _id
+            //},
+            success:function(res){
+                result = res
+            }
+        });
+        return result;
     }
 
     this.posting = function(timelineText) {

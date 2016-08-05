@@ -81,4 +81,9 @@ public class TimelineServiceImpl implements TimelineService {
     public Timeline getTimelineById(long id) {
         return timelineRepository.findOne(id);
     }
+
+    @Override
+    public void deleteTimelineById(long id) {
+        timelineRepository.delete(id);
+    }
 }
