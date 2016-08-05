@@ -119,7 +119,7 @@ public class TimelineApiController extends BaseController{
 
             if(usersService.getCurrentUser() != null) {
                 Timeline timeline = timelineService.getTimelineById(id);
-                if(usersService.getCurrentUser().getUserId() == timeline.getUserId()) {
+                if(usersService.getCurrentUser().getUserId() == timeline.getWriterId()) {
                     timelineService.deleteTimelineById(id);
                     return createSuccessResponse("success", "Success to delete timeline");
                 } else {
