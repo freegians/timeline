@@ -1,8 +1,10 @@
 package com.freegians.timeline;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.freegians.timeline.domain.Follower;
 import com.freegians.timeline.domain.Timeline;
 import com.freegians.timeline.domain.Users;
+import com.freegians.timeline.repository.FollowerRepository;
 import com.freegians.timeline.repository.TimelineRepository;
 import com.freegians.timeline.repository.UsersRepository;
 import com.freegians.timeline.security.CurrentUser;
@@ -56,12 +58,12 @@ public class UserApiControllerTest {
     private ObjectMapper objectMapper;
 
     @Autowired
-    private TimelineRepository timelineRepository;
-
-    @Autowired
     UsersRepository usersRepository;
 
-    private Timeline timeline;
+    @Autowired
+    FollowerRepository followerRepository;
+
+    private Users users;
 
     private MockMvc mock;
 
@@ -74,12 +76,8 @@ public class UserApiControllerTest {
         em = emf.createEntityManager();
 
         em.getTransaction().begin();
-        em.createNativeQuery("TRUNCATE TABLE TIMELINE").executeUpdate();
+        em.createNativeQuery("TRUNCATE TABLE USERS").executeUpdate();
         em.getTransaction().commit();
-
-        timeline = new Timeline(1L, 1L, "test", "test timeline text", 1);
-        Timeline postTimeline = timelineRepository.save(timeline);
-        assertEquals(postTimeline.getTimelineText(), timeline.getTimelineText());
 
         Users users = new Users("test", "test");
         Users createUser = usersRepository.save(users);
@@ -87,47 +85,103 @@ public class UserApiControllerTest {
     }
 
     @Test
-    public void testGetTimelineAll() {
+    public void testCountOfUsers() {
         try {
-            ResultActions resultActions = mock.perform(MockMvcRequestBuilders.get("/api/timeline")
+            ResultActions resultActions = mock.perform(MockMvcRequestBuilders.get("/api/user/countOfUsers")
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsBytes(timeline)));
+                    .content(objectMapper.writeValueAsBytes(users)));
 
             resultActions.andDo(MockMvcResultHandlers.print())
                     .andExpect(MockMvcResultMatchers.status().isOk())
-                    .andExpect(MockMvcResultMatchers.jsonPath("$.data[0].timelineText", Matchers.is(timeline.getTimelineText())));
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.data", Matchers.is(1)));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void testPostTimeline() {
+    public void testCreateUser() {
         try {
-            ResultActions resultActions = mock.perform(MockMvcRequestBuilders.post("/api/timeline/post").with(user("test").password("test").roles("USER"))
-                    .param("timelineText", timeline.getTimelineText())
+            users.setUserName("test2");
+            ResultActions resultActions = mock.perform(MockMvcRequestBuilders.post("/api/user/" + users.getUserName())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsBytes(timeline)));
-
+                    .content(objectMapper.writeValueAsBytes(users)));
             resultActions.andDo(MockMvcResultHandlers.print())
                     .andExpect(MockMvcResultMatchers.status().isOk())
-                    .andExpect(MockMvcResultMatchers.jsonPath("$.data.timelineText", Matchers.is(timeline.getTimelineText())));
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.data.users.userName", Matchers.is(users.getUserName())));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void testDeleteTimeline() {
+    public void testGetUserListAll() {
         try {
-            ResultActions resultActions = mock.perform(MockMvcRequestBuilders.delete("/api/timeline/delete").with(user("test").password("test").roles("USER"))
-                    .param("id", "1")
+            ResultActions resultActions = mock.perform(MockMvcRequestBuilders.get("/api/user/listAll")
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsBytes(timeline)));
+                    .content(objectMapper.writeValueAsBytes(users)));
+            resultActions.andDo(MockMvcResultHandlers.print())
+                    .andExpect(MockMvcResultMatchers.status().isOk())
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.data[0].userName", Matchers.is(users.getUserName())));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testGetFollower() {
+        try {
+            Users users1 = new Users("test1", "test1");
+            Users createUser1 = usersRepository.save(users);
+            Users users2 = new Users("test2", "test2");
+            Users createUser2 = usersRepository.save(users);
+
+            Follower follower = new Follower(1L, 2L);
+            followerRepository.save(follower);
+            follower = new Follower(1L, 3L);
+            followerRepository.save(follower);
+
+            ResultActions resultActions = mock.perform(MockMvcRequestBuilders.get("/api/user/follower")
+                    .param("userId", "1")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsBytes(users)));
 
             resultActions.andDo(MockMvcResultHandlers.print())
                     .andExpect(MockMvcResultMatchers.status().isOk())
-                    .andExpect(MockMvcResultMatchers.jsonPath("$.success", Matchers.is(true)));
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.data[0].userName", Matchers.is(createUser1.getUserName())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.data[1].userName", Matchers.is(createUser2.getUserName())));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Test
+    public void testPutFollowingUnFollowing() {
+        try {
+            Users users1 = new Users("test1", "test1");
+            Users createUser1 = usersRepository.save(users);
+
+            ResultActions resultActions = mock.perform(MockMvcRequestBuilders.put("/api/user/follower").with(user("test").password("test").roles("USER"))
+                    .param("userId", String.valueOf(createUser1.getUserId()))
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsBytes(users)));
+
+            resultActions.andDo(MockMvcResultHandlers.print())
+                    .andExpect(MockMvcResultMatchers.status().isOk())
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.data.userId", Matchers.is(createUser1.getUserId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.data.followerId", Matchers.is(users.getUserId())));
+
+
+            ResultActions resultActions2 = mock.perform(MockMvcRequestBuilders.put("/api/user/unFollower").with(user("test").password("test").roles("USER"))
+                    .param("userId", String.valueOf(createUser1.getUserId()))
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsBytes(users)));
+
+            resultActions2.andDo(MockMvcResultHandlers.print())
+                    .andExpect(MockMvcResultMatchers.status().isOk())
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.success", Matchers.is(true)))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.data´", Matchers.is("Success unfollowing")));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -139,15 +193,10 @@ public class UserApiControllerTest {
     public void after() {
         em = emf.createEntityManager();
         em.getTransaction().begin();
-        em.createNativeQuery("TRUNCATE TABLE TIMELINE").executeUpdate();
-        em.getTransaction().commit();
-
-        em.getTransaction().begin();
         em.createNativeQuery("TRUNCATE TABLE USERS").executeUpdate();
         em.getTransaction().commit();
 
         em.close();
-        assertEquals(timelineRepository.findAll().size(), 0);
         assertEquals(usersRepository.findAll().size(), 0);
     }
 }
