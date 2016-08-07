@@ -108,10 +108,6 @@ public class UserApiController extends BaseController{
     ) {
         try {
             if(usersService.getCurrentUser() != null) {
-//                Follower follower = new Follower();
-//                follower.setUserId(userId);
-//                follower.setFollowerId(usersService.getCurrentUser().getUserId());
-
 
                 Follower follower = followerService.getFollower(userId, usersService.getCurrentUser().getUserId());
 
