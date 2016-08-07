@@ -6,23 +6,23 @@ spring-boot 기반에 front-end 라이브러리는 webjar를 이용 하였습니
 
 
 
-## 필요사항
+## Requirements
 
 - JDK 1.7 이상
 - Maven 3.2.2 이상
 - mysql 5.6 이상
 ``
 
-## 시작
+## Getting started
 
-### 빌드
+### Build
 
 ```
 $ cd timeline
 $ mvn clean package
 ```
 
-### 실행
+### Run
 
 ```
 $ cd target
