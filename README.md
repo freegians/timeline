@@ -2,7 +2,7 @@
 
 팔로우, 포스팅, 뉴스피드 정도만 간단히 구현한 프로젝트 입니다.
 
-spring-boot 기반에 front-end 라이브러리는 webjar를 이용 하였습니다.
+standalone 으로 구동하기 위해서 spring boot 기반으로 구현했으며 front-end 라이브러리는 webjar를 이용 하였습니다.
 
 
 
