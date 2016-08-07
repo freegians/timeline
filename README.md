@@ -32,6 +32,7 @@ $ java -jar timeline-0.0.1.jar
     - dbname: timeline
     - username: timeline
     - password: timeline
+- 디비이름 및 유저 생성만 해주면 테스트용 데이터는 생성됨
 
 ## API
 
