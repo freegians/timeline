@@ -18,7 +18,7 @@ standalone 으로 구동하기 위해서 spring boot 기반으로 구현했으�
 ### Build
 
 ```
-$ cd project-folder
+$ cd timeline
 $ mvn clean package
 ```
 
