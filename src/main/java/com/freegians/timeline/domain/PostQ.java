@@ -20,4 +20,11 @@ public class PostQ {
     private long id;
     @Column(name = "TIMELINE_ID")
     private long timelineId;
+
+    public PostQ() {}
+
+    public PostQ(Long timelineId) {
+        super();
+        this.timelineId = timelineId;
+    }
 }

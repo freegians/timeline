@@ -27,4 +27,10 @@ public class UserRole {
         this.roleName = roleName;
     }
 
+    public UserRole(long userId, String roleName) {
+        super();
+        this.userId = userId;
+        this.roleName = roleName;
+    }
+
 }

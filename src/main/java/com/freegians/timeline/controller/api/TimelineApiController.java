@@ -87,17 +87,10 @@ public class TimelineApiController extends BaseController{
             @RequestParam(value = "timelineText", required=true) String timelineText
     ) {
         try{
-            TimeUtil timeUtil = new TimeUtil();
-            Timeline _timeline = new Timeline();
-            _timeline.setUserId(usersService.getCurrentUser().getUserId());
-            _timeline.setWriterId(usersService.getCurrentUser().getUserId());
-            _timeline.setWriterName(usersService.getCurrentUser().getUsername());
-            _timeline.setTimelineText(timelineText);
-            _timeline.setCreatedDate(timeUtil.getNowTimestamp());
-            _timeline.setOriginal(1);
 
-            Timeline timeline = new Timeline();
-            timeline = timelineService.postTimeline(_timeline);
+            Timeline postTimeline = new Timeline(usersService.getCurrentUser().getUserId(), usersService.getCurrentUser().getUserId(), usersService.getCurrentUser().getUsername(), timelineText, 1);
+
+            Timeline timeline = timelineService.postTimeline(postTimeline);
 
             postQService.workPostQ();
 

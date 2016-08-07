@@ -52,13 +52,8 @@ public class UsersServiceImpl implements UsersService {
     public Users createUser(String userName) {
         TimeUtil timeUtil = new TimeUtil();
 
-        Users users = new Users();
-        users.setUserName(userName);
-        // TODO 암호화 해야함
-        users.setPassword(userName);
-//        users.setPassword(new BCryptPasswordEncoder().encode(userName));
-        users.setCreatedDate(timeUtil.getNowTimestamp());
-        users.setLastUadate(timeUtil.getNowTimestamp());
+        Users users = new Users(userName, userName);
+        // TODO 패스워드 암호화 해야함
         return usersRepository.save(users);
     }
 

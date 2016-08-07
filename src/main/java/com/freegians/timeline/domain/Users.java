@@ -23,10 +23,35 @@ public class Users {
     @Column(name = "PASSWORD")
     private String password;
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "CREATED_DATE")
+    @Column(name = "CREATED_DATE", insertable = false, updatable = false)
     private Date createdDate;
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "LAST_UPDATE")
-    private Date lastUadate;
+    @Column(name = "LAST_UPDATE", insertable = false, updatable = false)
+    private Date lastUpdate;
 
+
+    public Users() {}
+
+    public Users(Long userId, String userName, String password, Date createdDate, Date lastUpdate) {
+        super();
+        this.userId = userId;
+        this.userName = userName;
+        this.password = password;
+        this.createdDate = createdDate;
+        this.lastUpdate = lastUpdate;
+    }
+
+    public Users(String userName, String password, Date createdDate, Date lastUpdate) {
+        super();
+        this.userName = userName;
+        this.password = password;
+        this.createdDate = createdDate;
+        this.lastUpdate = lastUpdate;
+    }
+
+    public Users(String userName, String password) {
+        super();
+        this.userName = userName;
+        this.password = password;
+    }
 }

@@ -17,12 +17,12 @@ public interface TimelineRepository extends JpaRepository <Timeline, Long> {
 
     List<Timeline> findByUserIdOrderByCreatedDateDescIdDesc(long userId);
 
-    @Query(value="SELECT ID, USER_ID, WRITER_ID, WRITER_NAME, TIMELINE_TEXT, CREATED_DATE FROM TIMELINE WHERE USER_ID = ?1 ORDER BY CREATED_DATE DESC, ID DESC LIMIT ?2, ?3", nativeQuery = true)
+    @Query(value="SELECT ID, USER_ID, WRITER_ID, WRITER_NAME, TIMELINE_TEXT, CREATED_DATE, LAST_UPDATE FROM TIMELINE WHERE USER_ID = ?1 ORDER BY CREATED_DATE DESC, ID DESC LIMIT ?2, ?3", nativeQuery = true)
     List<Timeline> findByUserIdOrderByCreatedDateDescIdDesc(long userId, long start, int range);
 
-    @Query(value="SELECT ID, USER_ID, WRITER_ID, WRITER_NAME, TIMELINE_TEXT, CREATED_DATE FROM TIMELINE ORDER BY CREATED_DATE DESC, ID DESC LIMIT ?1, ?2", nativeQuery = true)
+    @Query(value="SELECT ID, USER_ID, WRITER_ID, WRITER_NAME, TIMELINE_TEXT, CREATED_DATE, LAST_UPDATE FROM TIMELINE ORDER BY CREATED_DATE DESC, ID DESC LIMIT ?1, ?2", nativeQuery = true)
     List<Timeline> findOrderByCreatedDateDescIdDesc(long start, int range);
 
-    @Query(value="SELECT ID, USER_ID, WRITER_ID, WRITER_NAME, TIMELINE_TEXT, CREATED_DATE FROM TIMELINE WHERE ORIGINAL = 1 ORDER BY CREATED_DATE DESC, ID DESC LIMIT ?1, ?2", nativeQuery = true)
+    @Query(value="SELECT ID, USER_ID, WRITER_ID, WRITER_NAME, TIMELINE_TEXT, CREATED_DATE, LAST_UPDATE FROM TIMELINE WHERE ORIGINAL = 1 ORDER BY CREATED_DATE DESC, ID DESC LIMIT ?1, ?2", nativeQuery = true)
     List<Timeline> findByOriginalOrderByCreatedDateDescIdDesc(long start, int range);
 }

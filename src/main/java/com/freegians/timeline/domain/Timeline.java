@@ -25,8 +25,11 @@ public class Timeline {
     @Column(name = "TIMELINE_TEXT")
     private String timelineText;
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "CREATED_DATE")
+    @Column(name = "CREATED_DATE", insertable = false, updatable = false)
     private Date createdDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "LAST_UPDATE", insertable = false, updatable = false)
+    private Date lastUpdate;
     @Column(name = "ORIGINAL")
     private int original;
 
@@ -48,6 +51,14 @@ public class Timeline {
         this.writerName = writerName;
         this.timelineText = timelineText;
         this.createdDate = createdDate;
+        this.original = original;
+    }
+    public Timeline(long userId, long writerId, String writerName, String timelineText, int original) {
+        super();
+        this.userId = userId;
+        this.writerId = writerId;
+        this.writerName = writerName;
+        this.timelineText = timelineText;
         this.original = original;
     }
 }

@@ -90,9 +90,7 @@ public class UserApiController extends BaseController{
     ) {
         try {
             if(usersService.getCurrentUser() != null) {
-                Follower follower = new Follower();
-                follower.setUserId(userId);
-                follower.setFollowerId(usersService.getCurrentUser().getUserId());
+                Follower follower = new Follower(userId, usersService.getCurrentUser().getUserId());
                 return createSuccessResponse(followerService.saveFollower(follower));
             } else {
                 return createFailureResponse("로그인이 필요합니다.");

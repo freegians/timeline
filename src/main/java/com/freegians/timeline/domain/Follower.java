@@ -22,4 +22,11 @@ public class Follower {
     @Column(name = "FOLLOWER_ID")
     private long followerId;
 
+    public Follower() {}
+
+    public Follower(Long userId, Long followerId) {
+        super();
+        this.userId = userId;
+        this.followerId = followerId;
+    }
 }
