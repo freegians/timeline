@@ -18,7 +18,7 @@ standalone 으로 구동하기 위해서 spring boot 기반으로 구현했으�
 ### Build
 
 ```
-$ cd timeline
+$ cd project-folder
 $ mvn clean package
 ```
 
@@ -28,6 +28,10 @@ $ mvn clean package
 $ cd target
 $ java -jar timeline-0.0.1.jar
 ```
+- Mysql 기본 계정 설정
+    - dbname: timeline
+    - username: timeline
+    - password: timeline
 
 ## API
 

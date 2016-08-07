@@ -8,11 +8,7 @@ import com.freegians.timeline.service.UsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +16,7 @@ import java.util.Map;
 /**
  * Created by freegians on 2016. 8. 1..
  */
-@Controller
+@RestController
 @RequestMapping("/api/timeline")
 public class TimelineApiController extends BaseController{
 
@@ -45,7 +41,6 @@ public class TimelineApiController extends BaseController{
      * @return
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
-    @ResponseBody
     public Object getTimeline(
             @RequestParam(value = "userId", required=false, defaultValue = "0") Long userId,
             @RequestParam(value = "start", required=false, defaultValue = "0") Long start,
@@ -85,7 +80,6 @@ public class TimelineApiController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/post", method = RequestMethod.POST)
-    @ResponseBody
     public Object postTimeline(
             @RequestParam(value = "timelineText", required=true) String timelineText
     ) {
@@ -112,7 +106,6 @@ public class TimelineApiController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    @ResponseBody
     public Object deleteTimeline(
             @RequestParam(value = "id", required=true) Long id
     ) {

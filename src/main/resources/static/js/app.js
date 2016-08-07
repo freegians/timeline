@@ -30,7 +30,6 @@ var TimelineClass = function () {
             _userId = 0;
         }
         var data = this.getTimeline(_userId);
-        console.log('data:', data);
 
 
         if(data) {
@@ -78,10 +77,7 @@ var TimelineClass = function () {
     }
 
     this.posting = function(timelineText) {
-        //var re = /\r\n/g    //개행문자를 나타내는 정규표현식
-        //timelineText = timelineText.replace(re, "<br/>");   //개행문자를 <br/>로 치환
 
-        //console.log('ttttttttttttttt', timelineText);
         var result;
         $.ajax({
             url: ctx + '/api/timeline/post',

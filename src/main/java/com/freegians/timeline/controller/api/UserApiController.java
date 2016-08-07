@@ -7,13 +7,12 @@ import com.freegians.timeline.service.UsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by freegians on 2016. 8. 1..
  */
-@Controller
+@RestController
 @RequestMapping("/api/user")
 public class UserApiController extends BaseController{
 
@@ -31,7 +30,6 @@ public class UserApiController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/countOfUsers", method = RequestMethod.GET)
-    @ResponseBody
     public Object getCountOfUsers() {
         try{
             return createSuccessResponse(usersService.countOfUsers());
@@ -47,7 +45,6 @@ public class UserApiController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/{userName}", method = RequestMethod.PUT)
-    @ResponseBody
     public Object putUser(
             @PathVariable("userName") String userName
     ) {
@@ -63,7 +60,6 @@ public class UserApiController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/listAll", method = RequestMethod.GET)
-    @ResponseBody
     public Object getUserListAll(
     ) {
         try {
@@ -80,7 +76,6 @@ public class UserApiController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/follower", method = RequestMethod.GET)
-    @ResponseBody
     public Object getFollowerList(
             @RequestParam(value = "userId", required=false, defaultValue = "0") Long userId
     ) {
@@ -98,7 +93,6 @@ public class UserApiController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/following", method = RequestMethod.PUT)
-    @ResponseBody
     public Object putFollowing(
             @RequestParam(value = "userId", required=false, defaultValue = "0") Long userId
     ) {
@@ -121,7 +115,6 @@ public class UserApiController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/unFollowing", method = RequestMethod.DELETE)
-    @ResponseBody
     public Object deleteFollowing(
             @RequestParam(value = "userId", required=false, defaultValue = "0") Long userId
     ) {
