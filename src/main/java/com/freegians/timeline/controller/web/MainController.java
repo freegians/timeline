@@ -5,20 +5,14 @@ import com.freegians.timeline.service.UsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.Map;
 
 
 @Controller("mainController")
-//public class MainController extends BaseController {
 public class MainController {
 	private static final Logger LOG = LoggerFactory.getLogger(MainController.class);
 
@@ -26,6 +20,10 @@ public class MainController {
 	UsersService usersService;
 
 
+	/**
+	 * 메인 페이지
+	 * @return
+     */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView index(
 	) {
@@ -37,6 +35,11 @@ public class MainController {
 		return mav;
 	}
 
+	/**
+	 * 특정 유저 메인 페이지
+	 * @param userName
+	 * @return
+     */
 	@RequestMapping(value = "/{userName}", method = RequestMethod.GET)
 	public ModelAndView user(
 			@PathVariable("userName") String userName
@@ -51,11 +54,19 @@ public class MainController {
 		return mav;
 	}
 
+	/**
+	 * 로그인 페이지
+	 * @return
+     */
 	@RequestMapping("/login")
 	public String login() {
 		return "login";
 	}
 
+	/**
+	 * 회원 가입 페이지
+	 * @return
+     */
 	@RequestMapping("/signup")
 	public String signUp() {
 		return "signup";

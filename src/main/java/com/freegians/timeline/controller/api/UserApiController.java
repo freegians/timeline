@@ -58,6 +58,10 @@ public class UserApiController extends BaseController{
         }
     }
 
+    /**
+     * 유저 전체 리스트
+     * @return
+     */
     @RequestMapping(value = "/listAll", method = RequestMethod.GET)
     @ResponseBody
     public Object getUserListAll(
@@ -70,6 +74,11 @@ public class UserApiController extends BaseController{
     }
 
 
+    /**
+     * 특정 유저의 팔로우 리스트
+     * @param userId
+     * @return
+     */
     @RequestMapping(value = "/follower", method = RequestMethod.GET)
     @ResponseBody
     public Object getFollowerList(
@@ -83,6 +92,11 @@ public class UserApiController extends BaseController{
     }
 
 
+    /**
+     * 특정 유저를 팔로잉 하기
+     * @param userId
+     * @return
+     */
     @RequestMapping(value = "/following", method = RequestMethod.PUT)
     @ResponseBody
     public Object putFollowing(
@@ -101,6 +115,11 @@ public class UserApiController extends BaseController{
     }
 
 
+    /**
+     * 특정 유저를 언팔로잉 하기
+     * @param userId
+     * @return
+     */
     @RequestMapping(value = "/unFollowing", method = RequestMethod.DELETE)
     @ResponseBody
     public Object deleteFollowing(

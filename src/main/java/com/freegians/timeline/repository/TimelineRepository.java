@@ -1,8 +1,6 @@
 package com.freegians.timeline.repository;
 
 import com.freegians.timeline.domain.Timeline;
-import com.freegians.timeline.domain.Users;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

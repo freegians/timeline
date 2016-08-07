@@ -6,6 +6,7 @@ import com.freegians.timeline.domain.Timeline;
 import com.freegians.timeline.domain.Users;
 import com.freegians.timeline.repository.FollowerRepository;
 import com.freegians.timeline.repository.TimelineRepository;
+import com.freegians.timeline.repository.UserRoleRepository;
 import com.freegians.timeline.repository.UsersRepository;
 import com.freegians.timeline.security.CurrentUser;
 import com.freegians.timeline.security.WebSecurityConfig;
@@ -61,6 +62,9 @@ public class UserApiControllerTest {
     UsersRepository usersRepository;
 
     @Autowired
+    UserRoleRepository userRoleRepository;
+
+    @Autowired
     FollowerRepository followerRepository;
 
     private Users users;
@@ -79,7 +83,15 @@ public class UserApiControllerTest {
         em.createNativeQuery("TRUNCATE TABLE USERS").executeUpdate();
         em.getTransaction().commit();
 
-        Users users = new Users("test", "test");
+        em.getTransaction().begin();
+        em.createNativeQuery("TRUNCATE TABLE USER_ROLE").executeUpdate();
+        em.getTransaction().commit();
+
+        em.getTransaction().begin();
+        em.createNativeQuery("TRUNCATE TABLE FOLLOWER").executeUpdate();
+        em.getTransaction().commit();
+
+        users = new Users("test", "test");
         Users createUser = usersRepository.save(users);
         assertEquals(createUser.getUserName(), users.getUserName());
     }
@@ -102,13 +114,13 @@ public class UserApiControllerTest {
     @Test
     public void testCreateUser() {
         try {
-            users.setUserName("test2");
-            ResultActions resultActions = mock.perform(MockMvcRequestBuilders.post("/api/user/" + users.getUserName())
+//            users.setUserName("test2");
+            ResultActions resultActions = mock.perform(MockMvcRequestBuilders.put("/api/user/test2")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsBytes(users)));
             resultActions.andDo(MockMvcResultHandlers.print())
                     .andExpect(MockMvcResultMatchers.status().isOk())
-                    .andExpect(MockMvcResultMatchers.jsonPath("$.data.users.userName", Matchers.is(users.getUserName())));
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.data.users.userName", Matchers.is("test2")));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -132,9 +144,9 @@ public class UserApiControllerTest {
     public void testGetFollower() {
         try {
             Users users1 = new Users("test1", "test1");
-            Users createUser1 = usersRepository.save(users);
+            Users createUser1 = usersRepository.save(users1);
             Users users2 = new Users("test2", "test2");
-            Users createUser2 = usersRepository.save(users);
+            Users createUser2 = usersRepository.save(users2);
 
             Follower follower = new Follower(1L, 2L);
             followerRepository.save(follower);
@@ -160,28 +172,28 @@ public class UserApiControllerTest {
     public void testPutFollowingUnFollowing() {
         try {
             Users users1 = new Users("test1", "test1");
-            Users createUser1 = usersRepository.save(users);
+            Users createUser1 = usersRepository.save(users1);
 
-            ResultActions resultActions = mock.perform(MockMvcRequestBuilders.put("/api/user/follower").with(user("test").password("test").roles("USER"))
+            ResultActions resultActions = mock.perform(MockMvcRequestBuilders.put("/api/user/following").with(user("test").password("test").roles("USER"))
                     .param("userId", String.valueOf(createUser1.getUserId()))
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsBytes(users)));
+                    .content(objectMapper.writeValueAsBytes(createUser1)));
 
             resultActions.andDo(MockMvcResultHandlers.print())
                     .andExpect(MockMvcResultMatchers.status().isOk())
-                    .andExpect(MockMvcResultMatchers.jsonPath("$.data.userId", Matchers.is(createUser1.getUserId())))
-                    .andExpect(MockMvcResultMatchers.jsonPath("$.data.followerId", Matchers.is(users.getUserId())));
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.data.userId", Matchers.is((int) createUser1.getUserId())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.data.followerId", Matchers.is(1)));
 
 
-            ResultActions resultActions2 = mock.perform(MockMvcRequestBuilders.put("/api/user/unFollower").with(user("test").password("test").roles("USER"))
+            ResultActions resultActions2 = mock.perform(MockMvcRequestBuilders.delete("/api/user/unFollowing").with(user("test").password("test").roles("USER"))
                     .param("userId", String.valueOf(createUser1.getUserId()))
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsBytes(users)));
+                    .content(objectMapper.writeValueAsBytes(createUser1)));
 
             resultActions2.andDo(MockMvcResultHandlers.print())
                     .andExpect(MockMvcResultMatchers.status().isOk())
                     .andExpect(MockMvcResultMatchers.jsonPath("$.success", Matchers.is(true)))
-                    .andExpect(MockMvcResultMatchers.jsonPath("$.data´", Matchers.is("Success unfollowing")));
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.data", Matchers.is("Success unfollowing")));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -191,12 +203,24 @@ public class UserApiControllerTest {
 
     @After
     public void after() {
-        em = emf.createEntityManager();
+
         em.getTransaction().begin();
         em.createNativeQuery("TRUNCATE TABLE USERS").executeUpdate();
         em.getTransaction().commit();
 
+        em.getTransaction().begin();
+        em.createNativeQuery("TRUNCATE TABLE USER_ROLE").executeUpdate();
+        em.getTransaction().commit();
+
+        em.getTransaction().begin();
+        em.createNativeQuery("TRUNCATE TABLE FOLLOWER").executeUpdate();
+        em.getTransaction().commit();
+
         em.close();
+
         assertEquals(usersRepository.findAll().size(), 0);
+        assertEquals(userRoleRepository.findAll().size(), 0);
+        assertEquals(followerRepository.findAll().size(), 0);
+
     }
 }

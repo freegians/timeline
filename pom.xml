@@ -5,7 +5,7 @@
 
 	<groupId>com.freegians.timeline</groupId>
 	<artifactId>timeline</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
 	<name>timeline</name>
@@ -25,48 +25,57 @@
 	</properties>
 
 	<dependencies>
+		<!-- for jpa -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+
+		<!-- for jdbc -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
+
+		<!-- for mysql connect -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.39</version>
 		</dependency>
+
+		<!-- for getter setter -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.16.6</version>
 		</dependency>
+
+		<!-- for security -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+
+		<!-- for html template -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
+
+		<!-- for embeded tomcat -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<optional>true</optional>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.boot</groupId>-->
+			<!--<artifactId>spring-boot-devtools</artifactId>-->
+			<!--<optional>true</optional>-->
+		<!--</dependency>-->
 
-		<!--compile "org.webjars:jquery:2.2.3"-->
-		<!--compile "org.webjars:handlebars:4.0.5"-->
-		<!--compile "org.webjars:jquery-ui:1.11.4"-->
-		<!--compile "org.webjars:jquery-blockui:2.65"-->
-		<!--compile "org.webjars:jquery-validation:1.15.0"-->
+		<!-- for jquery webjar -->
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>jquery</artifactId>
@@ -78,6 +87,8 @@
 			<!--<artifactId>h2</artifactId>-->
 			<!--<scope>runtime</scope>-->
 		<!--</dependency>-->
+
+		<!-- for unit test -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

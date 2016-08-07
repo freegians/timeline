@@ -3,6 +3,7 @@ package com.freegians.timeline;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.freegians.timeline.domain.Timeline;
 import com.freegians.timeline.domain.Users;
+import com.freegians.timeline.repository.PostQRepository;
 import com.freegians.timeline.repository.TimelineRepository;
 import com.freegians.timeline.repository.UsersRepository;
 import com.freegians.timeline.security.CurrentUser;
@@ -61,6 +62,9 @@ public class TimelineApiControllerTest {
     @Autowired
     UsersRepository usersRepository;
 
+    @Autowired
+    PostQRepository postQRepository;
+
     private Timeline timeline;
 
     private MockMvc mock;
@@ -75,6 +79,14 @@ public class TimelineApiControllerTest {
 
         em.getTransaction().begin();
         em.createNativeQuery("TRUNCATE TABLE TIMELINE").executeUpdate();
+        em.getTransaction().commit();
+
+        em.getTransaction().begin();
+        em.createNativeQuery("TRUNCATE TABLE POST_Q").executeUpdate();
+        em.getTransaction().commit();
+
+        em.getTransaction().begin();
+        em.createNativeQuery("TRUNCATE TABLE USERS").executeUpdate();
         em.getTransaction().commit();
 
         timeline = new Timeline(1L, 1L, "test", "test timeline text", 1);
@@ -137,9 +149,13 @@ public class TimelineApiControllerTest {
 
     @After
     public void after() {
-        em = emf.createEntityManager();
+
         em.getTransaction().begin();
         em.createNativeQuery("TRUNCATE TABLE TIMELINE").executeUpdate();
+        em.getTransaction().commit();
+
+        em.getTransaction().begin();
+        em.createNativeQuery("TRUNCATE TABLE POST_Q").executeUpdate();
         em.getTransaction().commit();
 
         em.getTransaction().begin();
@@ -147,7 +163,9 @@ public class TimelineApiControllerTest {
         em.getTransaction().commit();
 
         em.close();
+
         assertEquals(timelineRepository.findAll().size(), 0);
         assertEquals(usersRepository.findAll().size(), 0);
+        assertEquals(postQRepository.findAll().size(), 0);
     }
 }

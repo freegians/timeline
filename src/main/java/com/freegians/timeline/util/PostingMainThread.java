@@ -3,13 +3,12 @@ package com.freegians.timeline.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by freegians on 2016. 8. 3..
+ * 
+ * 
  */
 public class PostingMainThread implements Runnable {
     protected static final Logger LOG = LoggerFactory.getLogger(PostingMainThread.class);

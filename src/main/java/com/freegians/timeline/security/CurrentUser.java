@@ -18,11 +18,11 @@ public class CurrentUser implements UserDetails {
     private static final long serialVersionUID = -4086869747130410600L;
 
 
-    private long userId;                                  // 유저 고유 아이디
+    private long userId;                              // 유저 고유 아이디
     private String userName;                          // 유저 이름
     private String password;                          // 유저 비밀번호
 
-    private Set<GrantedAuthority> authorities;          // 유저가 가지고 있는 권한 목록
+    private Set<GrantedAuthority> authorities;        // 유저가 가지고 있는 권한 목록
 
 
     public CurrentUser(long userId, String userName, String password,  Collection<? extends GrantedAuthority> authorities){
@@ -86,7 +86,7 @@ public class CurrentUser implements UserDetails {
 
     private static SortedSet<GrantedAuthority> sortAuthorities(Collection<? extends GrantedAuthority> authorities) {
         Assert.notNull(authorities, "Cannot pass a null GrantedAuthority collection");
-        // Ensure array iteration order is predictable (as per UserDetails.getAuthorities() contract and SEC-717)
+
         SortedSet<GrantedAuthority> sortedAuthorities =
                 new TreeSet<GrantedAuthority>(new AuthorityComparator());
 
@@ -103,8 +103,7 @@ public class CurrentUser implements UserDetails {
         private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
 
         public int compare(GrantedAuthority g1, GrantedAuthority g2) {
-            // Neither should ever be null as each entry is checked before adding it to the set.
-            // If the authority is null, it is a custom authority and should precede others.
+
             if (g2.getAuthority() == null) {
                 return -1;
             }

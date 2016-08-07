@@ -1,10 +1,8 @@
 package com.freegians.timeline.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * Created by freegians on 2016. 8. 1..

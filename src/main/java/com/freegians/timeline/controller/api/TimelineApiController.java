@@ -79,7 +79,11 @@ public class TimelineApiController extends BaseController{
         }
     }
 
-
+    /**
+     * 글쓰기
+     * @param timelineText
+     * @return
+     */
     @RequestMapping(value = "/post", method = RequestMethod.POST)
     @ResponseBody
     public Object postTimeline(
@@ -91,9 +95,9 @@ public class TimelineApiController extends BaseController{
 
             Timeline timeline = timelineService.postTimeline(postTimeline);
 
-            postQService.workPostQ();
 
-//            asyncService.testAsyncAnnotationForMethodsWithReturnType();
+            // TODO 독립 프로세스를 이용해서 처리하도록 분리 해야 함함
+           postQService.workPostQ();
 
             return createSuccessResponse(timeline);
         }catch (Exception e){
@@ -102,6 +106,11 @@ public class TimelineApiController extends BaseController{
     }
 
 
+    /**
+     * 글 삭제
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     @ResponseBody
     public Object deleteTimeline(

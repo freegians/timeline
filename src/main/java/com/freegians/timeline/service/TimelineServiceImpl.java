@@ -3,7 +3,6 @@ package com.freegians.timeline.service;
 import com.freegians.timeline.domain.PostQ;
 import com.freegians.timeline.domain.Timeline;
 import com.freegians.timeline.repository.TimelineRepository;
-import com.freegians.timeline.security.CurrentUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,8 +62,8 @@ public class TimelineServiceImpl implements TimelineService {
 
     @Override
     public Timeline postTimeline(Timeline timeline) {
-        Timeline timelineResult = new Timeline();
-        timelineResult = timelineRepository.save(timeline);
+
+        Timeline timelineResult = timelineRepository.save(timeline);
 
 
         if(timeline.getOriginal() == 1) {

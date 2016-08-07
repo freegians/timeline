@@ -10,7 +10,7 @@ spring-boot 기반에 front-end 라이브러리는 webjar를 이용 하였습니
 
 - JDK 1.7 이상
 - Maven 3.2.2 이상
-- mysql 5.6 이상
+- Mysql 5.6 이상
 ``
 
 ## Getting started
@@ -26,7 +26,7 @@ $ mvn clean package
 
 ```
 $ cd target
-$ java -jar timeline.jar
+$ java -jar timeline-0.0.1.jar
 ```
 
 ## API

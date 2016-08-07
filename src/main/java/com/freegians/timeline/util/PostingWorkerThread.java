@@ -2,8 +2,6 @@ package com.freegians.timeline.util;
 
 import com.freegians.timeline.domain.PostQ;
 import com.freegians.timeline.repository.PostQRepository;
-import com.freegians.timeline.service.PostQService;
-import com.freegians.timeline.service.PostQServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
