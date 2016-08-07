@@ -5,7 +5,6 @@ import com.freegians.timeline.domain.Timeline;
 import com.freegians.timeline.service.PostQService;
 import com.freegians.timeline.service.TimelineService;
 import com.freegians.timeline.service.UsersService;
-import com.freegians.timeline.util.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

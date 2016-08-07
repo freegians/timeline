@@ -5,7 +5,6 @@ import com.freegians.timeline.domain.Users;
 import com.freegians.timeline.repository.UserRoleRepository;
 import com.freegians.timeline.repository.UsersRepository;
 import com.freegians.timeline.security.CurrentUser;
-import com.freegians.timeline.util.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +49,6 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public Users createUser(String userName) {
-        TimeUtil timeUtil = new TimeUtil();
 
         Users users = new Users(userName, userName);
         // TODO 패스워드 암호화 해야함
